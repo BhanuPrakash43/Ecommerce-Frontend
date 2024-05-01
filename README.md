@@ -15,7 +15,7 @@ git clone https://github.com/BhanuPrakash43/Ecommerce-Website.git
 
 <h2>Navigate to the project directory:</h2>
 
-cd your-repository
+cd Ecommerce-Website
 
 <h2>Install dependencies:</h2>
 
