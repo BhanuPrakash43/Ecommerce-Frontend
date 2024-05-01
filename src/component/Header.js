@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assest/logo.png";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { BsCartFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,15 +26,15 @@ const Header = () => {
 
       <div className="flex items-center h-full justify-between">
         <Link to={""}>
-          <div className="h-10">
-            <img src={logo} className="h-full" />
+          <div className="text-3xl mt-3 font-bold">
+            <p>Grocery Website</p>
           </div>
         </Link>
 
         <div className="flex items-center gap-4 md:gap-7">
-          <nav className="gap-4 md:gap-6 text-base md:text-lg hidden md:flex">
+          <nav className="gap-4 md:gap-6 text-base md:text-lg hidden md:flex font-medium">
             <Link to={""}>Home</Link>
-            <Link to={"menu/63f0fdbb3bcc2f97fa53d25d"}>Menu</Link>
+            <Link to={"menu/6628a36900a7195b1892bdc4"}>Menu</Link>
             <Link to={"about"}>About</Link>
             <Link to={"contact"}>Contact</Link>
           </nav>
@@ -60,7 +59,7 @@ const Header = () => {
                 {userData.email === process.env.REACT_APP_ADMIN_EMAIL && (
                   <Link
                     to={"newproduct"}
-                    className="whitespace-nowrap cursor-pointer px-2"
+                    className="whitespace-nowrap cursor-pointer px-2 font-medium text-lg"
                   >
                     New product
                   </Link>
@@ -68,7 +67,7 @@ const Header = () => {
 
                 {userData.image ? (
                   <p
-                    className="cursor-pointer text-white px-2 bg-red-500"
+                    className="cursor-pointer text-white px-2 bg-red-500 mt-3"
                     onClick={handleLogout}
                   >
                     Logout ({userData.firstName}){" "}
@@ -86,7 +85,7 @@ const Header = () => {
                     Home
                   </Link>
                   <Link
-                    to={"menu/63f0fdbb3bcc2f97fa53d25d"}
+                    to={"menu/6628a36900a7195b1892bdc4"}
                     className="px-2 py-1"
                   >
                     Menu

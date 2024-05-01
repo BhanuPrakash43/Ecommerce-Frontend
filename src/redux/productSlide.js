@@ -27,10 +27,9 @@ export const productSlice = createSlice({
       }
     },
     deleteCartItem: (state, action) => {
-      toast("one Item Delete");
+      toast("One Item Deleted");
       const index = state.cartItem.findIndex((el) => el._id === action.payload);
       state.cartItem.splice(index, 1);
-      console.log(index);
     },
     increaseQty: (state, action) => {
       const index = state.cartItem.findIndex((el) => el._id === action.payload);
@@ -47,7 +46,7 @@ export const productSlice = createSlice({
       const index = state.cartItem.findIndex((el) => el._id === action.payload);
       let qty = state.cartItem[index].qty;
       if (qty > 1) {
-        const qtyDec = ++qty;
+        const qtyDec = --qty;
         state.cartItem[index].qty = qtyDec;
 
         const price = state.cartItem[index].price;
@@ -55,6 +54,11 @@ export const productSlice = createSlice({
 
         state.cartItem[index].total = total;
       }
+    },
+    // New action to delete product from productList
+    deleteProduct: (state, action) => {
+      const productId = action.payload;
+      state.productList = state.productList.filter(product => product._id !== productId);
     },
   },
 });
@@ -65,6 +69,7 @@ export const {
   deleteCartItem,
   increaseQty,
   decreaseQty,
+  deleteProduct, // Export the new action
 } = productSlice.actions;
 
 export default productSlice.reducer;

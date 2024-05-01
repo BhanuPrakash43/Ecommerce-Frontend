@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import CardFeature from "../component/CardFeature";
 import HomeCard from "../component/HomeCard";
 import { GrPrevious, GrNext } from "react-icons/gr";
-import FilterProduct from "../component/FilterProduct";
 import AllProduct from "../component/AllProduct";
 
 const Home = () => {
@@ -29,13 +28,13 @@ const Home = () => {
       <div className="md:flex gap-4 py-2">
         <div className="md:w-1/2">
           <div className="flex gap-3 bg-slate-300 w-36 px-2 items-center rounded-full">
-            <p className="text-sm font-medium text-slate-900">Bike Delivery</p>
+            <p className="text-sm font-medium mt-5 text-slate-900">Bike Delivery</p>
             <img
               src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png"
               className="h-7"
             />
           </div>
-          <h2 className="text-4xl md:text-7xl font-bold py-3">
+          <h2 className="text-4xl md:text-7xl font-bold py-3 mt-10">
             The Fasted Delivery in{" "}
             <span className="text-red-600 text-">Your Home</span>
           </h2>
@@ -65,6 +64,7 @@ const Home = () => {
                   />
                 );
               })
+            
             : loadingArray.map((el, index) => {
                 return (
                   <HomeCard key={index + "loading"} loading={"Loading..."} />

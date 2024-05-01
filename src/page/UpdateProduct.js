@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { BsCloudUpload } from "react-icons/bs";
 import { ImagetoBase64 } from "../utility/ImagetoBase64";
 
-const Newproduct = () => {
+const UpdateProduct = () => {
+  const { productId } = useParams();
   const [data, setData] = useState({
     name: "",
     category: "",
@@ -12,81 +14,92 @@ const Newproduct = () => {
     description: "",
   });
 
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_SERVER_DOMAIN}/product/${productId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch product details");
+        }
+        const productData = await response.json();
+        setData(productData); // Update state with fetched product data
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+        toast.error("Failed to fetch product details");
+      }
+    };
+
+    fetchProductDetails();
+  }, [productId]);
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-
-    setData((preve) => {
-      return {
-        ...preve,
-        [name]: value,
-      };
-    });
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const uploadImage = async (e) => {
-    const data = await ImagetoBase64(e.target.files[0]);
-    // console.log(data)
-
-    setData((preve) => {
-      return {
-        ...preve,
-        image: data,
-      };
-    });
+    const imageData = await ImagetoBase64(e.target.files[0]);
+    setData((prev) => ({
+      ...prev,
+      image: imageData,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
-
-    const { name, image, category, price } = data;
-
-    if (name && image && category && price) {
-      const fetchData = await fetch(
-        `${process.env.REACT_APP_SERVER_DOMIN}/uploadProduct`,
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(data),
+    try {
+      const { name, image, category, price, description } = data;
+      if (name && category && price) {
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("category", category);
+        formData.append("price", price);
+        formData.append("description", description);
+        if (image) {
+          formData.append("image", image);
         }
-      );
 
-      const fetchRes = await fetchData.json();
-
-      console.log(fetchRes);
-      toast(fetchRes.message);
-
-      setData(() => {
-        return {
-          name: "",
-          category: "",
-          image: "",
-          price: "",
-          description: "",
-        };
-      });
-    } else {
-      toast("Enter required Fields");
+        const fetchData = await fetch(
+          `${process.env.REACT_APP_SERVER_DOMAIN}/product/${productId}`,
+          {
+            method: "PUT",
+            body: formData,
+          }
+        );
+        const fetchRes = await fetchData.json();
+        toast.success(fetchRes.message);
+      } else {
+        toast.error("Enter required fields");
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+      toast.error("An error occurred. Please try again later.");
     }
   };
+
   return (
     <div className="p-4">
-      <p className="text-3xl text-center font-bold">Add New Product Page</p>
+      <p className="text-3xl text-center font-bold">Update Product Page</p>
       <form
-        className="m-auto w-full max-w-md  shadow flex flex-col p-3 bg-white"
+        className="m-auto w-full max-w-md shadow flex flex-col p-3 bg-white"
         onSubmit={handleSubmit}
       >
+        {/* Form inputs */}
         <label htmlFor="name">Name</label>
         <input
-          type={"text"}
+          type="text"
           name="name"
           className="bg-slate-200 p-1 my-1"
           onChange={handleOnChange}
           value={data.name}
         />
 
+        {/* Other form inputs */}
         <label htmlFor="category">Category</label>
         <select
           className="bg-slate-200 p-1 my-1"
@@ -95,24 +108,17 @@ const Newproduct = () => {
           onChange={handleOnChange}
           value={data.category}
         >
-          <option value={"other"}>select category</option>
+          <option value={"other"}>Select category</option>
           <option value={"fruits"}>Fruits</option>
           <option value={"vegetable"}>Vegetable</option>
-          <option value={"icream"}>Icream</option>
-          <option value={"dosa"}>Dosa</option>
-          <option value={"pizza"}>Pizza</option>
-          <option value={"rice"}>rice</option>
-          <option value={"cake"}>Cake</option>
-          <option value={"burger"}>Burger</option>
-          <option value={"panner"}>Panner</option>
-          <option value={"sandwich"}>Sandwich</option>
+          {/* Add other options as needed */}
         </select>
 
         <label htmlFor="image">
           Image
           <div className="h-40 w-full bg-slate-200  rounded flex items-center justify-center cursor-pointer">
             {data.image ? (
-              <img src={data.image} className="h-full" />
+              <img src={data.image} className="h-full" alt="Product" />
             ) : (
               <span className="text-5xl">
                 <BsCloudUpload />
@@ -157,4 +163,4 @@ const Newproduct = () => {
   );
 };
 
-export default Newproduct;
+export default UpdateProduct;
