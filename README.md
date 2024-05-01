@@ -11,7 +11,7 @@ Proceed to checkout
 <h2>Installation</h2>
 <h2>Clone the repository:</h2>
 
-git clone https://github.com/your-username/your-repository.git
+git clone https://github.com/BhanuPrakash43/Ecommerce-Website.git
 
 <h2>Navigate to the project directory:</h2>
 
