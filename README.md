@@ -1,37 +1,38 @@
-Grocery Shopping Website
+<h1>Grocery Shopping Website</h1>
 This project is a grocery shopping website developed using Create React App. Users can browse various grocery items, add them to their cart, and proceed to checkout.
 
-Features
+<h2>Features</h2>
 Browse grocery items by category
 Filter for specific items
 Add items to cart
 Modify cart contents
 Proceed to checkout
 
-Installation
-Clone the repository:
+<h2>Installation</h2>
+<h2>Clone the repository:</h2>
 
 git clone https://github.com/your-username/your-repository.git
 
-Navigate to the project directory:
+<h2>Navigate to the project directory:</h2>
 
 cd your-repository
 
-Install dependencies:
+<h2>Install dependencies:</h2>
 
 npm install
 
-Create a .env file in the root directory with the following variables:
+<h2>Create a .env file in the root directory with the following variables:</h2>
 
 REACT_APP_SERVER_DOMAIN=your_server_domain
+<br>
 REACT_APP_ADMIN_EMAIL=your_admin_email
 
-To start the development server, run:
+<h2>To start the development server, run:</h2>
 
 npm start
 
 Visit http://localhost:3000 in your browser to view the application.
 
-Contributing
+<h2>Contributing</h2>
 Contributions are welcome! Please create an issue or submit a pull request with any improvements or bug fixes.
 
